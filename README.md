@@ -173,40 +173,40 @@ Returns a Roman numeral string or an error message for invalid input.
                  ┌─────────────────────────────┐
                  │ Backend (Node.js + Express) │
                  │ - /romannumeral API         │
-                 │ - Converts 1–3999 → Roman   │
+                 │ - Converts 1–3999 to Roman  │
                  │ - Logs via Winston          │
                  │ - Metrics via prom-client   │
                  │ - Traces via OpenTelemetry  │
                  └────────┬──────────────┬─────┘
                           │              │
                           ▼              ▼
-         ┌────────────────────────┐   ┌─────────────────────┐
-         │    Jaeger Collector    │   │   Prometheus        │
-         │  (OTLP HTTP @ 4318)    │   │ (Scrapes /metrics)  │
-         └────────────┬───────────┘   └──────────┬──────────┘
-                      │                          │
-                      ▼                          ▼
-             ┌────────────────┐         ┌────────────────────┐
-             │ Jaeger UI      │         │ Prometheus UI      │
-             │ http://:16686  │         │ (not in this repo  │
-             │                │         │    the moment)     │
-             └────────────────┘         └────────────────────┘
+         ┌────────────────────────┐   ┌──────────────────────┐
+         │    Jaeger Collector    │   │   Prometheus         │
+         │  (OTLP HTTP @ 4318)    │   │ (Scrapes /metrics)   │
+         └────────────┬───────────┘   └──────────────────────┘
+                      │                          
+                      ▼                          
+             ┌─────────────────────────┐        
+             │ Jaeger UI               │         
+             │ http://localhost:16686  │    
+             │                         │         
+             └─────────────────────────┘         
 
 
 ## Diagram Highlights
 - Frontend (Vite + React + Adobe Spectrum):
   - Renders form UI.
-  - Sends requests to backend /romannumeral?query=123.
+  - Sends requests to backend `/romannumeral?query=123`
   - Sends OTLP tracing spans (via @opentelemetry/sdk-trace-web).
 
 - Backend (Node.js + Express + TypeScript):
   - Handles the Roman conversion logic.
-  - Exposes /metrics endpoint.
+  - Exposes `/metrics` endpoint.
   - Sends traces using OpenTelemetry to Jaeger via OTLP.
 
 - Observability Stack:
   - Jaeger: visualizes distributed traces.
-  - Prometheus: (not a part of this repo) scrapes backend metrics via /metrics.
+  - Prometheus: scrapes backend metrics via endpoint `http://localhost:8080/metrics`
   
 ## Credits
   Built for the Adobe GenStudio Performance Marketing Engineering Take-Home Assessment.
