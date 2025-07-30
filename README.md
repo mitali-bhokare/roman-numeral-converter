@@ -70,50 +70,26 @@ roman-numeral-converter/
 - npm
 - Docker + Docker Compose (for Jaeger setup)
 
-### 1. Clone the repo
-
-```bash
-git clone https://github.com/your-username/roman-numeral-converter.git
-cd roman-numeral-converter
-```
-
-### 2.  Install dependencies
-```bash
-# Backend
-cd roman-numeral-backend
-npm install
-
-# Frontend
-cd ../roman-numeral-ui
-npm install
-```
-### 3. Start the application locally (without observability)
-**Start backend:**
-```bash
-cd roman-numeral-backend
-npm start
-```
-
-**Start frontend:**
-```bash
-cd ../roman-numeral-ui
-npm run dev
-```
-
-Visit: [http://localhost:5173](http://localhost:5173)
-
----
 ## Docker Deployment + Observability
 
 To run the full stack with observability + Jaeger UI:
 
-### 1. Build and start all services:
-> Note for reviewer: This project is best evaluated using Docker. Please ensure Docker and Docker Compose are installed.
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/mitali-bhokare/roman-numeral-converter.git
+cd roman-numeral-converter
+```
+
+### 2. Build and start all services:
+> Note for reviewer: Please ensure Docker and Docker Compose are installed.
 You can launch the full solution and observability stack by running:
 
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
+
+> '-d' flag is used to run docker in detached mode
 
 ### 2. Services will be available at:
 
@@ -138,13 +114,13 @@ docker compose down
 This project includes unit tests using [Vitest](https://vitest.dev/). 
 ### Backend
 ```bash
-# From roman-numeral-backend
+cd roman-numeral-backend
 npm run test
 ```
 
 ### Frontend
 ```bash
-# From roman-numeral-ui
+cd roman-numeral-ui
 npm run test
 ```
 
@@ -163,10 +139,14 @@ Returns a Roman numeral string or an error message for invalid input.
 
 ## Observability Details
 
-- **Logs**: Winston logger in `roman-numeral-backend/src/logger.ts` Logs are timestamped and persisted on disk in the logs/ directory. This allows for local debugging and inspection even without a cloud logging solution.
-  - Log Output:
-    - logs/error.log – Contains only error-level logs for debugging failures.
-    - logs/combined.log – Contains all logs (info, warn, error) for general request tracing and observability.
+- **Logs**: Winston logger in `roman-numeral-backend/src/logger.ts` Logs are timestamped and persisted on disk in the `logs/` directory inside the backend Docker container. This allows for local debugging and inspection even without a cloud logging solution.
+  - Log Output (inside container):
+      - logs/error.log – Contains only error-level logs for debugging failures.
+      - logs/combined.log – Contains all logs (info, warn, error) for general request tracing and observability.
+  - To inspect logs while the container is running:
+    ```bash
+    docker exec -it roman-numeral-converter-backend-1 cat logs/combined.log
+    ```
 - **Metrics**: Prometheus-formatted metrics exposed at `/metrics`
 - **Tracing**: Request-level tracing ID added for basic observability
   - Backend: Uses OpenTelemetry Node SDK
