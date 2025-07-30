@@ -1,13 +1,17 @@
 # Roman Numeral Converter 
 
-A full-stack web application that converts integers (1–3999) into Roman numerals. The project consists of:
+A full-stack web application that converts integers (1–3999) into Roman numerals.
+Includes observability features and a React Spectrum-based UI, all containerized via Docker.
 
+The project consists of:
 - A **Node.js + Express** backend REST API
 - A **React + Vite + Adobe React Spectrum** frontend
+- **Dark/Light Mode**: Adapts to system color scheme
 - Built-in **observability**: logging, metrics, and tracing
+- **Dockerized**: Fully containerized setup via `docker compose`
 
 ### Roman Numeral Specification
-This converter follows the standard rules of Roman numerals as described in [Roman numerals - Wikipedia](https://en.wikipedia.org/wiki/Roman_numerals).
+This converter adheres to the standard rules of Roman numerals as outlined in [Roman numerals - Wikipedia](https://en.wikipedia.org/wiki/Roman_numerals).
 
 ---
 
