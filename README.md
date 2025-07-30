@@ -141,8 +141,8 @@ Returns a Roman numeral string or an error message for invalid input.
 
 - **Logs**: Winston logger in `roman-numeral-backend/src/logger.ts` Logs are timestamped and persisted on disk in the `logs/` directory inside the backend Docker container. This allows for local debugging and inspection even without a cloud logging solution.
   - Log Output (inside container):
-      - logs/error.log – Contains only error-level logs for debugging failures.
-      - logs/combined.log – Contains all logs (info, warn, error) for general request tracing and observability.
+      - `logs/error.log` – Contains only error-level logs for debugging failures.
+      - `logs/combined.log` – Contains all logs (info, warn, error) for general request tracing and observability.
   - To inspect logs while the container is running:
     ```bash
     docker exec -it roman-numeral-converter-backend-1 cat logs/combined.log
